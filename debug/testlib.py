@@ -130,6 +130,7 @@ class VcsSim(object):
         done = False
         while not done:
             line = listenfile.readline()
+            print ("Line is %s" % line);
             if not line:
                 time.sleep(1)
             match = re.match(r"^Listening on port (\d+)$", line)
@@ -195,7 +196,11 @@ class Openocd(object):
         messaged = False
         while True:
             log = open(Openocd.logname).read()
+<<<<<<< HEAD
             if "Ready for Remote Connections" in log:
+=======
+            if "Examined RISC-V core" in log:
+>>>>>>> debug_remote_bitbang
                 break
             if not self.process.poll() is None:
                 raise Exception(
@@ -290,7 +295,11 @@ class Gdb(object):
         """Wait for prompt."""
         self.child.expect(r"\(gdb\)")
 
+<<<<<<< HEAD
     def command(self, command, timeout=6000):
+=======
+    def command(self, command, timeout=1000):
+>>>>>>> debug_remote_bitbang
         self.child.sendline(command)
         self.child.expect("\n", timeout=timeout)
         self.child.expect(r"\(gdb\)", timeout=timeout)
@@ -307,7 +316,11 @@ class Gdb(object):
 
     def interrupt(self):
         self.child.send("\003")
+<<<<<<< HEAD
         self.child.expect(r"\(gdb\)", timeout=6000)
+=======
+        self.child.expect(r"\(gdb\)", timeout=1000)
+>>>>>>> debug_remote_bitbang
         return self.child.before.strip()
 
     def x(self, address, size='w'):
@@ -340,7 +353,11 @@ class Gdb(object):
         return output
 
     def load(self):
+<<<<<<< HEAD
         output = self.command("load", timeout=6000)
+=======
+        output = self.command("load", timeout=1000)
+>>>>>>> debug_remote_bitbang
         assert "failed" not in  output
         assert "Transfer rate" in output
 
